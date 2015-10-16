@@ -1,11 +1,14 @@
-CREATE TABLE `quest_db`.`quests` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `hashnum` VARCHAR(255) NOT NULL,
-  `quest_name` VARCHAR(255) NULL,
-  `author_id` INT NOT NULL,
-  `player_id` INT NULL,
-  `status` VARCHAR(45) NOT NULL,
-  `is_private` INT NULL,
-  `quest_success_text` VARCHAR(255) NULL,
-  `quest_fail_text` VARCHAR(255) NULL,
-  PRIMARY KEY (`id`));
+CREATE TABLE `quests` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `hashnum` varchar(255) NOT NULL,
+  `quest_name` varchar(255) DEFAULT NULL,
+  `author_id` int(11) NOT NULL,
+  `player_id` int(11) DEFAULT NULL,
+  `status` varchar(45) NOT NULL,
+  `is_private` int(11) DEFAULT NULL,
+  `quest_success_text` varchar(255) DEFAULT NULL,
+  `quest_fail_text` varchar(255) DEFAULT NULL,
+  `expire_timestamp` datetime NOT NULL,
+  `curr_part` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
