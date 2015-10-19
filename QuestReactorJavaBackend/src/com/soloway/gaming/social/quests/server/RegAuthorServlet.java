@@ -48,7 +48,7 @@ public class RegAuthorServlet extends HttpServlet {
 					//regAuthorCallStmt.registerOutParameter("new_session_id", Types.INTEGER);
 					//regAuthorCallStmt.registerOutParameter("new_token", Types.VARCHAR);
 					regAuthorCallStmt.registerOutParameter("statuscode", Types.INTEGER);
-					regAuthorCallStmt.registerOutParameter("errormessage", Types.VARCHAR);
+					regAuthorCallStmt.registerOutParameter("statusmessage", Types.VARCHAR);
 					
 					boolean hadResults = regAuthorCallStmt.execute();
 					
@@ -64,7 +64,7 @@ public class RegAuthorServlet extends HttpServlet {
 					//regResult.setSessionId(String.valueOf(loginCallStmt.getInt("new_session_id")));
 					//regResult.setToken(loginCallStmt.getString("new_token"));
 					regResult.setStatusCode(regAuthorCallStmt.getInt("statuscode"));
-					regResult.setErrorMessage(regAuthorCallStmt.getString("errormessage"));
+					regResult.setErrorMessage(regAuthorCallStmt.getString("statusmessage"));
 					
 					
 				} finally {
