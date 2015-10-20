@@ -5,5 +5,5 @@ CREATE TABLE `quest_db`.`sessions` (
   `player_id` INT NULL,
   `curr_part` VARCHAR(255) NOT NULL,
   `token` VARCHAR(255) NULL,
-  `status` INT NULL,
+  `session_status` INT NULL,
   PRIMARY KEY (`id`));

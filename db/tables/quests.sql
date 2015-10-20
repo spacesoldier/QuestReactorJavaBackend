@@ -4,7 +4,7 @@ CREATE TABLE `quests` (
   `quest_name` varchar(255) DEFAULT NULL,
   `author_id` int(11) NOT NULL,
   `player_id` int(11) DEFAULT NULL,
-  `status` varchar(45) NOT NULL,
+  `quest_status` varchar(45) NOT NULL,
   `is_private` int(11) DEFAULT NULL,
   `quest_success_text` varchar(255) DEFAULT NULL,
   `quest_fail_text` varchar(255) DEFAULT NULL,

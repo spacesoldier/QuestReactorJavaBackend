@@ -38,15 +38,14 @@ public class RegAuthorServlet extends HttpServlet {
 			try {
 				Connection conn = DriverManager.getConnection(url,"root","rdtcns");
 				try {
-					String call = "{call quest_db.RegAuthor(?,?,?)}";
+					String call = "{call quest_db.RegAuthor(?,?,?,?,?)}";
 					CallableStatement regAuthorCallStmt = conn.prepareCall(call);
 					//set inputs
 					regAuthorCallStmt.setString("new_email", newRec.getNewEmail());
 					
 					//configure outputs
-					//regAuthorCallStmt.registerOutParameter("id_user", Types.INTEGER);
-					//regAuthorCallStmt.registerOutParameter("new_session_id", Types.INTEGER);
-					//regAuthorCallStmt.registerOutParameter("new_token", Types.VARCHAR);
+					regAuthorCallStmt.registerOutParameter("session_id", Types.INTEGER);
+					regAuthorCallStmt.registerOutParameter("session_token", Types.VARCHAR);
 					regAuthorCallStmt.registerOutParameter("statuscode", Types.INTEGER);
 					regAuthorCallStmt.registerOutParameter("statusmessage", Types.VARCHAR);
 					
@@ -60,9 +59,8 @@ public class RegAuthorServlet extends HttpServlet {
 						hadResults = loginCallStmt.getMoreResults();
 					}*/
 					
-					//regResult.setUserId(String.valueOf(loginCallStmt.getInt("id_user")));
-					//regResult.setSessionId(String.valueOf(loginCallStmt.getInt("new_session_id")));
-					//regResult.setToken(loginCallStmt.getString("new_token"));
+					regResult.setSessionId(regAuthorCallStmt.getInt("session_id"));
+					regResult.setSessionToken(regAuthorCallStmt.getString("session_token"));
 					regResult.setStatusCode(regAuthorCallStmt.getInt("statuscode"));
 					regResult.setErrorMessage(regAuthorCallStmt.getString("statusmessage"));
 					
@@ -74,8 +72,10 @@ public class RegAuthorServlet extends HttpServlet {
 				
 				
 			} catch(SQLException e){
-				//regResult.setStatusCode(-2);
-				//regResult.setErrorMessage("Error: "+e.getMessage());
+				regResult.setStatusCode(-2);
+				regResult.setErrorMessage("Error: DB error. "+e.getMessage());
+				regResult.setSessionId(-1);
+				regResult.setSessionToken("none");
 				e.printStackTrace();
 			}
 			
@@ -91,8 +91,8 @@ public class RegAuthorServlet extends HttpServlet {
 			
 		} else {
 			
-			//regResult.setUserId("-1");
-			//regResult.setSessionId("-1");
+			regResult.setSessionId(-1);
+			regResult.setSessionToken("none");
 			regResult.setStatusCode(-1);
 			regResult.setErrorMessage("Error: No data or wrong data format");
 		}
