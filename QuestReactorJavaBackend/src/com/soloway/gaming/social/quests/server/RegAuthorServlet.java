@@ -74,9 +74,9 @@ public class RegAuthorServlet extends HttpServlet {
 				
 				
 			} catch(SQLException e){
-				regResult.setStatusCode(-2);
-				regResult.setErrorMessage("Error: "+e.getMessage());
-//				e.printStackTrace();
+				//regResult.setStatusCode(-2);
+				//regResult.setErrorMessage("Error: "+e.getMessage());
+				e.printStackTrace();
 			}
 			
 			
