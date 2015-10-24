@@ -11,8 +11,7 @@ import com.soloway.gaming.social.quests.entities.RegAuthorResponse;
 
 @SuppressWarnings("serial")
 public class RegAuthorServlet extends HttpServlet {
-	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {		
 		String data = req.getParameter("data");
 		RegAuthorRequest newRec = null;
 		
@@ -100,13 +99,16 @@ public class RegAuthorServlet extends HttpServlet {
 		Gson gson = new Gson();
 		String regResultStr = gson.toJson(regResult);
 		
-		resp.setContentType("application/json");
-		resp.getWriter().write(regResultStr);
-	
 		
-		
-		
-		//resp.setContentType("text/plain");
-		//resp.getWriter().println("Hello, world");
+		String callback = req.getParameter("callback");
+		if (callback == null){
+			resp.setContentType("application/json");
+			resp.getWriter().write(regResultStr);
+		} else {
+			resp.getWriter().write(callback+"("+regResultStr+")");
+		}
+
 	}
+
+		
 }
