@@ -1,32 +1,37 @@
 package com.soloway.gaming.social.quests.server;
-import java.io.IOException;
-import java.sql.*;
-import java.sql.SQLException;
 
-import javax.servlet.http.*;
+import java.io.IOException;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Types;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.soloway.gaming.social.quests.entities.RegAuthorRequest;
-import com.soloway.gaming.social.quests.entities.RegAuthorResponse;
+import com.soloway.gaming.social.quests.entities.CreateQuestRequest;
+import com.soloway.gaming.social.quests.entities.CreateQuestResponse;;
 
-
-public class RegAuthorServlet extends HttpServlet {
+public class CreateNewQuestServlet extends HttpServlet {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7109687284985828028L;
+	private static final long serialVersionUID = 971494669880089935L;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {		
 		String data = req.getParameter("data");
-		RegAuthorRequest newRec = null;
+		CreateQuestRequest newRec = null;
 		
 		if (data != null){
 			
 			Gson gson = new Gson();
-			newRec = gson.fromJson(data, RegAuthorRequest.class);
+			newRec = gson.fromJson(data, CreateQuestRequest.class);
 		}
 		
-		RegAuthorResponse regResult = new RegAuthorResponse();
+		CreateQuestResponse regResult = new CreateQuestResponse();
 		
 		if (newRec != null){
 			
@@ -42,14 +47,18 @@ public class RegAuthorServlet extends HttpServlet {
 			try {
 				Connection conn = DriverManager.getConnection(url,"root","rdtcns");
 				try {
-					String call = "{call quest_db.RegAuthor(?,?,?,?,?)}";
+					String call = "{call quest_db.create_quest(?,?,?,?,?,?,?,?,?)}";
 					CallableStatement regAuthorCallStmt = conn.prepareCall(call);
 					//set inputs
-					regAuthorCallStmt.setString("new_email", newRec.getNewEmail());
+					regAuthorCallStmt.setString("quest_name", newRec.getQuest_name());
+					regAuthorCallStmt.setString("session_token", newRec.getSession_token());
+					regAuthorCallStmt.setString("new_success_text", newRec.getNew_success_text());
+					regAuthorCallStmt.setString("new_fail_text", newRec.getNew_fail_text());
+					regAuthorCallStmt.setInt("days_to_expire", newRec.getDays_to_expire());
 					
 					//configure outputs
-					regAuthorCallStmt.registerOutParameter("session_id", Types.INTEGER);
-					regAuthorCallStmt.registerOutParameter("session_token", Types.VARCHAR);
+					regAuthorCallStmt.registerOutParameter("quest_id", Types.INTEGER);
+					regAuthorCallStmt.registerOutParameter("quest_hash", Types.VARCHAR);
 					regAuthorCallStmt.registerOutParameter("statuscode", Types.INTEGER);
 					regAuthorCallStmt.registerOutParameter("statusmessage", Types.VARCHAR);
 					
@@ -63,8 +72,8 @@ public class RegAuthorServlet extends HttpServlet {
 						hadResults = loginCallStmt.getMoreResults();
 					}*/
 					
-					regResult.setSessionId(regAuthorCallStmt.getInt("session_id"));
-					regResult.setSessionToken(regAuthorCallStmt.getString("session_token"));
+					regResult.setQuestId(regAuthorCallStmt.getInt("quest_id"));
+					regResult.setQuestHash(regAuthorCallStmt.getString("quest_hash"));
 					regResult.setStatusCode(regAuthorCallStmt.getInt("statuscode"));
 					regResult.setErrorMessage(regAuthorCallStmt.getString("statusmessage"));
 					
@@ -78,8 +87,8 @@ public class RegAuthorServlet extends HttpServlet {
 			} catch(SQLException e){
 				regResult.setStatusCode(-2);
 				regResult.setErrorMessage("Error: DB error. "+e.getMessage());
-				regResult.setSessionId(-1);
-				regResult.setSessionToken("none");
+				regResult.setQuestId(-1);
+				regResult.setQuestHash("none");
 				e.printStackTrace();
 			}
 			
@@ -95,8 +104,8 @@ public class RegAuthorServlet extends HttpServlet {
 			
 		} else {
 			
-			regResult.setSessionId(-1);
-			regResult.setSessionToken("none");
+			regResult.setQuestId(-1);
+			regResult.setQuestHash("none");
 			regResult.setStatusCode(-1);
 			regResult.setErrorMessage("Error: No data or wrong data format");
 		}
