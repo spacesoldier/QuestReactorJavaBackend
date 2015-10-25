@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Загадки! Квесты! Каждому! :)</title>
+
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body { 
+                padding-bottom: 25px; 
+             }
+        #maincontainer{
+            padding-top: 60px;
+        }
+        #footer {
+                    height: 22px;
+                }
+        .navbar-fixed-bottom{
+                    min-height: 22px;
+                } 
+    </style>
+  </head>
+  <body>
+    <div class='navbar navbar-default navbar-fixed-top'>
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand">Квесты! Квесты! Квесты</a>
+            </div>
+        </div>
+    </div>
+    <div id="maincontainer" class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div id="slideList" class="well col-md-12">
+                            <div id="box3" class="clearfix">
+                                <label id="formgroup">
+                                    <input id="textinput" type="text" value="Введите Ваш e-mail адрес">
+                                    <p id="text">
+                                    <br>
+                                    </p>
+                                    <div id="backresponse"></div>
+                                </label>
+                                <input id="input1" type="button" value="ПОДПИСАТЬСЯ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div id="mainRedactor" class="well col-md-12">
+                            <!-- http://1-dot-questreactorbackend.appspot.com/reg_author?data={%27new_email%27:%27sabaka@sabaka.com%27} -->
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="footer" class='navbar navbar-default navbar-fixed-bottom'>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2">
+                    Version 0.1
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <script src="js/spinner/spin.min.js"></script>
+    <script src="js/splashutil.js"></script>
+    <script src="js/js.cookie.js"></script>
+    <!-- scrripts of the quest engine -->
+	<script src="js/uicontrols.js"></script>
+	<script src="js/errorhandler.js"></script>
+	<script src="js/datacontrol.js"></script>
+    <script src="js/mainredactor.js"></script>
+    <script src="js/questengine.js"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function(){
+           //var height = $(window).height();
+
+           //$("#slideList").height(height - 145);
+           //$("#mainRedactor").height(height - 145);
+           UIController.setMainViewport(document.getElementById("maincontainer"));
+           QuestEngine.init({view:"maincontainer"});
+           
+           
+           
+        });
+    </script>
+  </body>
+</html>
