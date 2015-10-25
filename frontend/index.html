@@ -9,7 +9,8 @@
 
     <!-- Bootstrap -->
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -41,36 +42,7 @@
         </div>
     </div>
     <div id="maincontainer" class="container-fluid">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div id="slideList" class="well col-md-12">
-                            <div id="box3" class="clearfix">
-                                <label id="formgroup">
-                                    <input id="textinput" type="text" value="Введите Ваш e-mail адрес">
-                                    <p id="text">
-                                    <br>
-                                    </p>
-                                    <div id="backresponse"></div>
-                                </label>
-                                <input id="input1" type="button" value="ПОДПИСАТЬСЯ">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-9">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div id="mainRedactor" class="well col-md-12">
-                            <!-- http://1-dot-questreactorbackend.appspot.com/reg_author?data={%27new_email%27:%27sabaka@sabaka.com%27} -->
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
     </div>
     
     <div id="footer" class='navbar navbar-default navbar-fixed-bottom'>
@@ -101,14 +73,9 @@
     
     <script type="text/javascript">
         $(document).ready(function(){
-           //var height = $(window).height();
 
-           //$("#slideList").height(height - 145);
-           //$("#mainRedactor").height(height - 145);
            UIController.setMainViewport(document.getElementById("maincontainer"));
            QuestEngine.init({view:"maincontainer"});
-           
-           
            
         });
     </script>

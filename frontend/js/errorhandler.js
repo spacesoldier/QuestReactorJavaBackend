@@ -31,9 +31,15 @@ var ErrorHandler = function(){
 		
 		
 		if (viewport != null){
+			var solution = "";
+			if (typeof input.solution != 'undefined'){
+				if (input.solution !== null){
+					solution = "<a class='btn btn-default alert-link'>"+input.solution+"</a>";
+				}
+			}
 			var error_html = "<div class='alert alert-warning alert-dismissible' role='alert'>"+
 							  "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"+
-							  "<strong>Whoops!</strong> "+currStatus+
+							  "<strong>Whoops!</strong> "+currStatus+" "+solution+
 							"</div>";
 			viewport.innerHTML = error_html;
 		} else {

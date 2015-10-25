@@ -1,5 +1,5 @@
 DELIMITER $$
-CREATE DEFINER=`root`@`%` PROCEDURE `create_quest`(	IN quest_name VARCHAR(255), 
+CREATE DEFINER=`root`@`%` PROCEDURE  `create_quest`(	IN quest_name VARCHAR(255), 
 									IN session_token VARCHAR(255),
 									IN new_success_text VARCHAR(255),
 									IN new_fail_text VARCHAR(255),
@@ -9,7 +9,7 @@ CREATE DEFINER=`root`@`%` PROCEDURE `create_quest`(	IN quest_name VARCHAR(255),
 									OUT quest_id INT, 
 									OUT quest_hash VARCHAR(255))
 BEGIN
-	DECLARE tmp_uuid, new_quest_hash, new_quest_id varchar(255);
+	DECLARE tmp_uuid, new_quest_hash, new_quest_id, new_hashnum varchar(255);
 	DECLARE new_author_id, new_player_id int;
 	DECLARE new_expiration_time datetime;
 
@@ -18,6 +18,7 @@ BEGIN
 		set new_player_id = -1;
 		select author_id into new_author_id from quest_db.sessions where token = session_token COLLATE utf8_unicode_ci limit 1;
 		select DATE_ADD(NOW(),INTERVAL (days_to_expire) DAY) into new_expiration_time;
+		set new_hashnum = uuid();
 		insert into quest_db.quests(	hashnum, 
 										quest_name,
 										author_id,
@@ -35,6 +36,7 @@ BEGIN
 										new_author_id,
 										new_player_id,
 										'created',
+										0,
 										new_success_text  COLLATE utf8_unicode_ci,
 										new_fail_text  COLLATE utf8_unicode_ci,
 										new_expiration_time,
